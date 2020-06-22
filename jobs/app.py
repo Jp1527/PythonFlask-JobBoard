@@ -4,8 +4,7 @@ PATH="db/jobs.sqlite"
 app=Flask(__name__)
 
 def open_connection():
-    connection=None
-    connection =getattr(g,"_connection",default=None)
+    connection =getattr(g,"_connection",None)
     
     if connection ==None:
         connection=sqlite3.connect(PATH)
@@ -26,7 +25,7 @@ def execute_sql(sql,values=(),commit=False,single=False):
 
 @app.teardown_appcontext
 def close_connection(exception):
-    connection=getattr(g,"_connection",default=None)
+    connection=getattr(g,"_connection",None)
     if  connection!=None:
         connection.close_connection()
 
