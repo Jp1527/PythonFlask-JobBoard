@@ -20,7 +20,15 @@ def test_app_db_path_module3():
 @pytest.mark.test_app_open_connection_get_attribute_module3
 def test_app_open_connection_get_attribute_module3():
     assert 'open_connection' in dir(app), 'Have you defined a function named `open_connection`.'
-    assert 'getattr:g:_connection:None' in get_functions(app.open_connection), 'Have you used the `getattr` function to get the global `_connection`?'
+    result = [
+        item
+        for item in get_functions(app.open_connection)
+        if item.startswith("getattr:g:_connection")
+    ]
+    result_len = len(result) == 1
+    assert (
+        result_len
+    ), 'Have you used the `getattr` function to get the global `_connection`?'
 
 @pytest.mark.test_app_open_connection_connection_module3
 def test_app_open_connection_connection_module3():
